@@ -26,7 +26,7 @@ void wisielec(int liczba_los, char** tab) {
     printf("Podaj kolejne male litery, aby odgadnac wyraz\n");
     char n;
     int dl_wylosowanego_wyrazu = strlen(tab[liczba_los]);
-    int punkty = 0, proba = 0, zycia = 12;
+    int punkty = 0, proba = 0, zycia = 10;
     bool wygrana = false, znalezione = false;
     int i = 0, j = 0;
 
@@ -37,9 +37,11 @@ void wisielec(int liczba_los, char** tab) {
     }
 
     do {
+        znalezione = false;
         n = _getch();
+        proba++;
         for (i = 0; i < dl_wylosowanego_wyrazu; i++) {
-            if (n == tab[liczba_los][i]) {
+            if (n == tab[liczba_los][i] && n != a[i]) {
                 a[i] = tab[liczba_los][i];
                 ++punkty;
                 znalezione = true;
@@ -47,28 +49,126 @@ void wisielec(int liczba_los, char** tab) {
         }
         if (!znalezione) {
             --zycia;
-            printf("Zostaly ci zycia %d/12 \n", zycia);
+            switch (zycia) {
+            case 9:
+                printf("\n \n");
+                printf("     _____|_____ \n");
+                printf("Zostalo Ci %d/10 zyc \n", zycia);
+                break;
+            case 8:
+                printf("\n \n");
+                printf("          | \n");
+                printf("          | \n");
+                printf("          | \n");
+                printf("          | \n");
+                printf("     _____|_____ \n");
+                printf("Zostalo Ci %d/10 zyc \n", zycia);
+                break;
+            case 7:
+                printf("\n \n");
+                printf("   ________ \n");
+                printf("          | \n");
+                printf("          | \n");
+                printf("          | \n");
+                printf("          | \n");
+                printf("     _____|_____ \n");
+                printf("Zostalo Ci %d/10 zyc \n", zycia);
+                break;
+            case 6:
+                printf("\n \n");
+                printf("   ________ \n");
+                printf("  |       | \n");
+                printf("          | \n");
+                printf("          | \n");
+                printf("          | \n");
+                printf("     _____|_____ \n");
+                printf("Zostalo Ci %d/10 zyc \n", zycia);
+                break;
+            case 5:
+                printf("\n \n");
+                printf("   ________ \n");
+                printf("  |       | \n");
+                printf("  O       | \n");
+                printf("          | \n");
+                printf("          | \n");
+                printf("     _____|_____ \n");
+                printf("Zostalo Ci %d/10 zyc \n", zycia);
+                break;
+            case 4:
+                printf("\n \n");
+                printf("   ________ \n");
+                printf("  |       | \n");
+                printf("  O       | \n");
+                printf("  |       | \n");
+                printf("          | \n");
+                printf("     _____|_____ \n");
+                printf("Zostalo Ci %d/10 zyc \n", zycia);
+                break;
+            case 3:
+                printf("\n \n");
+                printf("   ________ \n");
+                printf("  |       | \n");
+                printf("  O       | \n");
+                printf(" /|       | \n");
+                printf("          | \n");
+                printf("     _____|_____ \n");
+                printf("Zostalo Ci %d/10 zyc \n", zycia);
+                break;
+            case 2:
+                printf("\n \n");
+                printf("   ________ \n");
+                printf("  |       | \n");
+                printf("  O       | \n");
+                printf(" /|\\      | \n");
+                printf("          | \n");
+                printf("     _____|_____ \n");
+                printf("Zostalo Ci %d/10 zyc \n", zycia);
+                break;
+            case 1:
+                printf("\n \n");
+                printf("   ________ \n");
+                printf("  |       | \n");
+                printf("  O       | \n");
+                printf(" /|\\      | \n");
+                printf(" /        | \n");
+                printf("     _____|_____ \n");
+                printf("Zostalo Ci %d/10 zyc \n", zycia);
+                break;
+            case 0:
+                printf("\n \n");
+                printf("   ________ \n");
+                printf("  |       | \n");
+                printf("  O       | \n");
+                printf(" /|\\      | \n");
+                printf(" / \\      | \n");
+                printf("     _____|_____ \n");
+                printf("Zostalo Ci %d/10 zyc \n", zycia);
+                break;
+            default:
+                printf("Zostalo Ci %d/10 zyc \n", zycia);
+                break;
+            }
+
         }
 
-            
-        proba++;
+        printf("\n\n\n");
+        //rysowanie odgadnieniych liter i _
         for (j = 0; j < dl_wylosowanego_wyrazu; j++) {
             printf("%c", a[j]);
         };
         printf("\n");
-        j = 0;
-        i = 0;
-        znalezione = false;
 
         if (punkty == dl_wylosowanego_wyrazu) {
             printf("Super, wygrales w %d ruchach! \n", proba);
             wygrana = true;
             break;
         }
-        printf("Punkty %d dlugosc wyrazu %d\n", punkty, dl_wylosowanego_wyrazu);
+        i = 0;
+        j = 0;
+        printf("Punkty %d / %d\n", punkty, dl_wylosowanego_wyrazu);
     } while ((zycia >= 1) && (!wygrana));
 
-    if (punkty < dl_wylosowanego_wyrazu) { printf("Tym razem sie nie udalo, zdobyles %d/%d punktow", punkty, dl_wylosowanego_wyrazu);  }
+    if (punkty < dl_wylosowanego_wyrazu) { printf("\n\nTym razem sie nie udalo, zdobyles %d/%d punktow", punkty, dl_wylosowanego_wyrazu); }
 
     free(a);
 }
@@ -89,25 +189,29 @@ int main(void)
         printf("Niepoprawne dane.\n");
         return;
     }
-        //gra
-        switch (wybor_kategorii) {
-        case it:
-            printf("WESZLO.\n");
-            ilosc_wyrazow = sizeof(napisy) / sizeof(int);
-            liczba_los = losowanie(ilosc_wyrazow);
-            wisielec(liczba_los, napisy);
-            break;
-        case ek:
-            ilosc_wyrazow = sizeof(ekonomia) / sizeof(int);
-            liczba_los = losowanie(ilosc_wyrazow);
-            wisielec(liczba_los, ekonomia);
-            break;
-        case ow:
-            ilosc_wyrazow = sizeof(owoce) / sizeof(int);
-            liczba_los = losowanie(ilosc_wyrazow);
-            wisielec(liczba_los, owoce);
-            break;
-        }
+    //gra
+    switch (wybor_kategorii) {
+    case it:
+        ilosc_wyrazow = sizeof(napisy) / sizeof(int);
+        liczba_los = losowanie(ilosc_wyrazow);
+        wisielec(liczba_los, napisy);
+        break;
+    case ek:
+        ilosc_wyrazow = sizeof(ekonomia) / sizeof(int);
+        liczba_los = losowanie(ilosc_wyrazow);
+        wisielec(liczba_los, ekonomia);
+        break;
+    case ow:
+        ilosc_wyrazow = sizeof(owoce) / sizeof(int);
+        liczba_los = losowanie(ilosc_wyrazow);
+        wisielec(liczba_los, owoce);
+        break;
+    default:
+        ilosc_wyrazow = sizeof(napisy) / sizeof(int);
+        liczba_los = losowanie(ilosc_wyrazow);
+        wisielec(liczba_los, napisy);
+        break;
+    }
 
 
     printf("\n\n");
